@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function AdminLoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   async function submit(event) {
@@ -91,14 +92,40 @@ export default function AdminLoginForm() {
           </label>
           <label>
             Password
-            <input
-              type="password"
-              name="password"
-              required
-              autoComplete="current-password"
-              placeholder="Enter your password"
-            />
+            <span className="admin-password-field">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                autoComplete="current-password"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                className="admin-password-toggle"
+                onClick={() => setShowPassword((visible) => !visible)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m3 3 18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.9 10.9 0 0 1 12 4c5.5 0 9 5 9 5a17.2 17.2 0 0 1-2.1 2.5M6.6 6.6C4.3 8 3 10 3 10s3.5 5 9 5c1.2 0 2.3-.2 3.3-.6" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 12s3.5-5 9-5 9 5 9 5-3.5 5-9 5-9-5-9-5Z" />
+                    <circle cx="12" cy="12" r="2.5" />
+                  </svg>
+                )}
+              </button>
+            </span>
           </label>
+          <div className="admin-login-options">
+            <span>Secure staff access</span>
+            <a href="mailto:jsprealestateandpropertymanage@gmail.com?subject=JSP%20Admin%20Password%20Reset%20Request">
+              Forgot password?
+            </a>
+          </div>
           {error ? (
             <p className="form-error" role="alert">
               {error}

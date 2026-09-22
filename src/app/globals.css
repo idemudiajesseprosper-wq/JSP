@@ -5306,6 +5306,81 @@ body {
     border-color 200ms ease,
     box-shadow 200ms ease;
 }
+.admin-password-field {
+  position: relative;
+  display: block;
+  margin-top: 8px;
+}
+.admin-password-field input {
+  width: 100%;
+  margin-top: 0;
+  padding-right: 56px;
+}
+.admin-login .admin-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+  color: #514945;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.admin-login .admin-password-toggle:hover,
+.admin-login .admin-password-toggle:focus-visible {
+  color: var(--wine);
+  background: rgba(122, 12, 24, 0.08);
+  outline: none;
+  transform: translateY(-50%);
+}
+.admin-password-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+.admin-login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: -5px;
+  color: #7a726c;
+  font-size: 10px;
+}
+.admin-login-options span::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #5d765c;
+  vertical-align: 1px;
+}
+.admin-login-options a {
+  color: #332b2a;
+  font-weight: 750;
+  border-bottom: 1px solid #bdb3ac;
+  padding-bottom: 3px;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+.admin-login-options a:hover,
+.admin-login-options a:focus-visible {
+  color: var(--wine);
+  border-color: var(--wine);
+}
 .admin-login input:focus-visible {
   outline: none;
   border-color: var(--wine);
@@ -7178,7 +7253,7 @@ body {
     font-weight: 750;
     line-height: 1;
     letter-spacing: 0.13em;
-    border-top: 1px solid rgba(255, 248, 235, 0.36);
+    border-top: 0;
   }
   .hero-desktop-copy {
     display: none;
