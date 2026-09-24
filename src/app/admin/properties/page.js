@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminShell from "@/components/AdminShell";
+import { ArrowUpRightIcon } from "@/components/ArrowIcons";
 import { isAdmin } from "@/lib/adminAuth";
 import { connectDB } from "@/lib/mongodb";
 import Property from "@/models/Property";
@@ -84,11 +85,12 @@ export default async function AdminPropertiesPage() {
               </div>
               <div className="admin-list-actions">
                 <Link href={`/admin/properties/${property._id}/edit`}>
-                  Edit property ↗
+                  Edit property{" "}
+                  <ArrowUpRightIcon className="admin-arrow-icon" />
                 </Link>
                 {property.published ? (
                   <Link href={`/properties/${property.slug}`} target="_blank">
-                    View live ↗
+                    View live <ArrowUpRightIcon className="admin-arrow-icon" />
                   </Link>
                 ) : null}
               </div>
@@ -103,7 +105,10 @@ export default async function AdminPropertiesPage() {
             Start with the basic details. You can save a draft and come back to
             the photos later.
           </p>
-          <Link href="/admin/properties/new">Add your first property ↗</Link>
+          <Link href="/admin/properties/new">
+            Add your first property{" "}
+            <ArrowUpRightIcon className="admin-arrow-icon" />
+          </Link>
         </div>
       ) : null}
     </AdminShell>

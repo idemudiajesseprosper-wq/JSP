@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminShell from "@/components/AdminShell";
+import { ArrowUpRightIcon } from "@/components/ArrowIcons";
 import { isAdmin } from "@/lib/adminAuth";
 import { connectDB } from "@/lib/mongodb";
 import Inquiry from "@/models/Inquiry";
@@ -53,17 +54,26 @@ export default async function AdminDashboard() {
         <Link href="/admin/properties">
           <span>ALL PROPERTIES</span>
           <strong>{properties}</strong>
-          <small>View and manage listings ↗</small>
+          <small>
+            View and manage listings{" "}
+            <ArrowUpRightIcon className="admin-arrow-icon" />
+          </small>
         </Link>
         <Link href="/admin/properties">
           <span>LIVE ON WEBSITE</span>
           <strong>{published}</strong>
-          <small>Published properties ↗</small>
+          <small>
+            Published properties{" "}
+            <ArrowUpRightIcon className="admin-arrow-icon" />
+          </small>
         </Link>
         <Link href="/admin/inquiries">
           <span>NEW INQUIRIES</span>
           <strong>{newInquiries}</strong>
-          <small>Respond to customers ↗</small>
+          <small>
+            Respond to customers{" "}
+            <ArrowUpRightIcon className="admin-arrow-icon" />
+          </small>
         </Link>
       </div>
       <div className="admin-dashboard-grid">
@@ -73,7 +83,9 @@ export default async function AdminDashboard() {
               <span className="admin-eyebrow">YOUR PORTFOLIO</span>
               <h2>Recent properties</h2>
             </div>
-            <Link href="/admin/properties">View all ↗</Link>
+            <Link href="/admin/properties">
+              View all <ArrowUpRightIcon className="admin-arrow-icon" />
+            </Link>
           </div>
           {recent.length ? (
             recent.map((property) => (
@@ -128,7 +140,9 @@ export default async function AdminDashboard() {
               <b>03</b> Publish when ready
             </li>
           </ol>
-          <Link href="/admin/properties/new">Create a listing ↗</Link>
+          <Link href="/admin/properties/new">
+            Create a listing <ArrowUpRightIcon className="admin-arrow-icon" />
+          </Link>
         </section>
       </div>
     </AdminShell>

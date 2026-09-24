@@ -1,27 +1,44 @@
-import { createHmac, scryptSync, timingSafeEqual } from "node:crypto";
+import {
+  createHmac,
+  randomBytes,
+  scryptSync,
+  timingSafeEqual,
+} from "node:crypto";
 import { cookies } from "next/headers";
 
 const COOKIE = "jsp_admin_session";
+
 function signature(value) {
   return createHmac("sha256", process.env.SESSION_SECRET || "")
     .update(value)
     .digest("base64url");
 }
-export function verifyPassword(password) {
-  const configured = process.env.ADMIN_PASSWORD_HASH;
-  if (!configured || !process.env.SESSION_SECRET) return false;
-  const [salt, hash] = configured.split(":");
-  if (!salt || !hash) return false;
-  const candidate = scryptSync(password, salt, 64);
+
+export function createPasswordHash(password) {
+  const salt = randomBytes(16).toString("hex");
+  const hash = scryptSync(String(password), salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+export function verifyPassword(
+  password,
+  configuredHash = process.env.ADMIN_PASSWORD_HASH,
+) {
+  if (!configuredHash || !process.env.SESSION_SECRET) return false;
+  const [salt, hash] = configuredHash.split(":");
+  if (!salt || !hash || !/^[0-9a-f]{128}$/i.test(hash)) return false;
+  const candidate = scryptSync(String(password), salt, 64);
   const expected = Buffer.from(hash, "hex");
   return (
     candidate.length === expected.length && timingSafeEqual(candidate, expected)
   );
 }
+
 export function createSession(email) {
   const payload = `${email}.${Date.now() + 8 * 60 * 60 * 1000}`;
   return `${payload}.${signature(payload)}`;
 }
+
 export function verifySession(token) {
   if (!token || !process.env.SESSION_SECRET) return false;
   const signatureSeparator = token.lastIndexOf(".");
@@ -37,11 +54,16 @@ export function verifySession(token) {
     !timingSafeEqual(Buffer.from(expected), Buffer.from(receivedSignature))
   )
     return false;
-  return Number(expiresAt) > Date.now() && email === process.env.ADMIN_EMAIL;
+  return (
+    Number(expiresAt) > Date.now() &&
+    email.trim().toLowerCase() === process.env.ADMIN_EMAIL?.trim().toLowerCase()
+  );
 }
+
 export async function isAdmin() {
   return verifySession((await cookies()).get(COOKIE)?.value);
 }
+
 export const adminCookie = {
   name: COOKIE,
   options: {

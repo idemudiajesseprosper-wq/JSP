@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import Toast from "@/components/Toast";
 export default function InquiryForm({ property }) {
   const [state, setState] = useState({
     loading: false,
@@ -67,14 +68,13 @@ export default function InquiryForm({ property }) {
           defaultValue={`Hello JSP, I am interested in ${property.title}. Please share more information.`}
         />
       </label>
-      {state.error && (
-        <p className="form-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.success && (
-        <output className="form-success">{state.success}</output>
-      )}
+      <Toast
+        message={state.error || state.success}
+        type={state.error ? "error" : "success"}
+        onDismiss={() =>
+          setState((current) => ({ ...current, error: "", success: "" }))
+        }
+      />
       <button type="submit" className="button wide" disabled={state.loading}>
         {state.loading ? "Sending…" : "Send Inquiry →"}
       </button>

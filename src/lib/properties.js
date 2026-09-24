@@ -23,7 +23,7 @@ export async function getPublishedProperties(filters = {}) {
       ),
     );
   } catch (error) {
-    console.error(
+    console.warn(
       "Published properties are temporarily unavailable:",
       error.message,
     );
@@ -40,7 +40,7 @@ export async function getProperty(slug) {
       JSON.stringify(await Property.findOne({ slug, published: true }).lean()),
     );
   } catch (error) {
-    console.error(
+    console.warn(
       "Property details are temporarily unavailable:",
       error.message,
     );

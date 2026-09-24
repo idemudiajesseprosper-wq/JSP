@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ArrowUpRightIcon } from "@/components/ArrowIcons";
+import Toast from "@/components/Toast";
 
 export default function AdminLoginForm() {
   const [error, setError] = useState("");
@@ -67,7 +69,10 @@ export default function AdminLoginForm() {
             />
           </Link>
           <Link href="/" className="admin-login-back">
-            Back to website <span aria-hidden="true">↗</span>
+            Back to website{" "}
+            <span aria-hidden="true">
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
           </Link>
         </div>
         <form className="admin-login" onSubmit={submit}>
@@ -126,14 +131,12 @@ export default function AdminLoginForm() {
               Forgot password?
             </a>
           </div>
-          {error ? (
-            <p className="form-error" role="alert">
-              {error}
-            </p>
-          ) : null}
+          <Toast message={error} type="error" onDismiss={() => setError("")} />
           <button type="submit" disabled={loading}>
             <span>{loading ? "Signing in..." : "Sign in to dashboard"}</span>
-            <span aria-hidden="true">↗</span>
+            <span aria-hidden="true">
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
           </button>
           <small>
             For authorised JSP staff only. Customers can browse freely without

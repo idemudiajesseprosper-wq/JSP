@@ -8118,3 +8118,307 @@ body {
     transition: none;
   }
 }
+
+/* Consistent non-emoji arrows in staff authentication and workspace UI. */
+.admin-arrow-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -2px;
+}
+.admin-sidebar a:has(.admin-arrow-icon),
+.admin-workspace-top a:has(.admin-arrow-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Admin password and account security */
+.admin-security-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.72fr);
+  gap: clamp(28px, 5vw, 76px);
+  align-items: start;
+}
+.admin-security-form,
+.admin-security-note {
+  border: 1px solid #ded6d0;
+  background: #fff;
+}
+.admin-security-form {
+  display: grid;
+  gap: 20px;
+  padding: clamp(28px, 4vw, 54px);
+}
+.admin-security-form-head {
+  margin-bottom: 8px;
+}
+.admin-security-form-head > span,
+.admin-security-note > span {
+  color: #850d20;
+  font-size: 0.59rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+.admin-security-form-head h2,
+.admin-security-note h2 {
+  margin: 14px 0 12px;
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-weight: 520;
+  line-height: 0.96;
+  letter-spacing: -0.07em;
+}
+.admin-security-form-head p,
+.admin-security-note p {
+  max-width: 520px;
+  margin: 0;
+  color: #746c67;
+  font-size: 0.78rem;
+  line-height: 1.75;
+}
+.admin-security-form > label {
+  display: grid;
+  gap: 8px;
+  color: #332d2a;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+.admin-security-password {
+  position: relative;
+  display: block;
+}
+.admin-security-password input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 54px 0 15px;
+  border: 1px solid #cfc6bf;
+  border-radius: 0;
+  background: #fbfaf8;
+  font: inherit;
+  font-size: 0.82rem;
+}
+.admin-security-password input:focus-visible {
+  outline: 2px solid rgba(133, 13, 32, 0.15);
+  border-color: #850d20;
+}
+.admin-security-password button {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  color: #5e5651;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.admin-security-password button:hover {
+  color: #850d20;
+  background: #f1e9e7;
+}
+.admin-security-password svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.admin-password-rules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.admin-password-rules li {
+  padding: 10px 11px;
+  color: #69615c;
+  background: #f4f0ed;
+  font-size: 0.6rem;
+  line-height: 1.45;
+}
+.admin-security-message {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+.admin-security-message.error {
+  color: #7f1020;
+  background: #f9e9eb;
+}
+.admin-security-message.success {
+  color: #28512f;
+  background: #eaf4eb;
+}
+.admin-security-form > .admin-primary-link {
+  justify-self: start;
+  min-width: 180px;
+  border: 0;
+  cursor: pointer;
+}
+.admin-security-form > .admin-primary-link:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.admin-security-note {
+  padding: clamp(28px, 4vw, 48px);
+  color: #fff;
+  background: #171514;
+  border-color: #171514;
+}
+.admin-security-note > span {
+  color: #bd7782;
+}
+.admin-security-note h2 {
+  color: #fff;
+  font-size: clamp(2.5rem, 3.8vw, 4rem);
+}
+.admin-security-note p {
+  color: #bfb7b2;
+}
+.admin-security-note dl {
+  margin: 35px 0 0;
+}
+.admin-security-note dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid #393432;
+  font-size: 0.67rem;
+}
+.admin-security-note dt {
+  color: #918985;
+}
+.admin-security-note dd {
+  margin: 0;
+  text-align: right;
+}
+.admin-stat-grid .admin-arrow-icon,
+.admin-dashboard-panel .admin-arrow-icon,
+.admin-property-actions .admin-arrow-icon {
+  margin-left: 5px;
+}
+@media (max-width: 900px) {
+  .admin-security-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .admin-security-form,
+  .admin-security-note {
+    padding: 25px 18px;
+  }
+  .admin-password-rules {
+    grid-template-columns: 1fr;
+  }
+  .admin-security-form > .admin-primary-link {
+    width: 100%;
+  }
+}
+
+/* Compact application toast notifications */
+.jsp-toast {
+  position: fixed;
+  z-index: 10000;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  gap: 10px;
+  align-items: center;
+  width: min(360px, calc(100vw - 40px));
+  min-height: 58px;
+  padding: 11px 12px;
+  color: #26211f;
+  background: #fff;
+  border: 1px solid #ded6d0;
+  border-left: 3px solid #850d20;
+  box-shadow: 0 12px 35px rgba(27, 21, 19, 0.14);
+  animation: jsp-toast-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.jsp-toast.success {
+  border-left-color: #3f6948;
+}
+.jsp-toast-mark {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: #fff;
+  background: #850d20;
+  border-radius: 50%;
+  font-size: 0.67rem;
+  font-weight: 900;
+}
+.jsp-toast.success .jsp-toast-mark {
+  background: #3f6948;
+}
+.jsp-toast p {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.jsp-toast button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  color: #706762;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  font: inherit;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.jsp-toast button:hover {
+  color: #171514;
+  background: #f2eeeb;
+}
+@keyframes jsp-toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(16px, -8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (max-width: 600px) {
+  .jsp-toast {
+    top: max(10px, env(safe-area-inset-top));
+    right: 10px;
+    width: min(320px, calc(100vw - 20px));
+    min-height: 52px;
+    padding: 9px 10px;
+    box-shadow: 0 9px 24px rgba(27, 21, 19, 0.13);
+  }
+  .jsp-toast p {
+    font-size: 0.68rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jsp-toast {
+    animation: none;
+  }
+}

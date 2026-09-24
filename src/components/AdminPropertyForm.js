@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Toast from "@/components/Toast";
 
 const initial = {
   title: "",
@@ -366,11 +367,7 @@ export default function AdminPropertyForm({ property }) {
             />
             <span>Mark as featured</span>
           </label>
-          {error ? (
-            <p className="form-error" role="alert">
-              {error}
-            </p>
-          ) : null}
+          <Toast message={error} type="error" onDismiss={() => setError("")} />
           <button type="submit" disabled={saving || uploading}>
             {saving
               ? "Saving…"

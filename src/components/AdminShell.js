@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { ArrowUpRightIcon } from "@/components/ArrowIcons";
 
 export default function AdminShell({
   title,
@@ -41,7 +42,10 @@ export default function AdminShell({
             href="/admin"
             className={pathname === "/admin" ? "is-active" : ""}
           >
-            Overview <span>↗</span>
+            Overview{" "}
+            <span>
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
           </Link>
           <Link
             href="/admin/properties"
@@ -49,7 +53,10 @@ export default function AdminShell({
               pathname.startsWith("/admin/properties") ? "is-active" : ""
             }
           >
-            Properties <span>↗</span>
+            Properties{" "}
+            <span>
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
           </Link>
           <Link
             href="/admin/inquiries"
@@ -57,12 +64,27 @@ export default function AdminShell({
               pathname.startsWith("/admin/inquiries") ? "is-active" : ""
             }
           >
-            Inquiries <span>↗</span>
+            Inquiries{" "}
+            <span>
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
+          </Link>
+          <Link
+            href="/admin/security"
+            className={
+              pathname.startsWith("/admin/security") ? "is-active" : ""
+            }
+          >
+            Security{" "}
+            <span>
+              <ArrowUpRightIcon className="admin-arrow-icon" />
+            </span>
           </Link>
         </nav>
         <div className="admin-sidebar-bottom">
           <Link href="/properties" target="_blank">
-            View public website ↗
+            View public website{" "}
+            <ArrowUpRightIcon className="admin-arrow-icon" />
           </Link>
           <button type="button" onClick={signOut}>
             Sign out
@@ -73,7 +95,7 @@ export default function AdminShell({
         <div className="admin-workspace-top">
           <span>JSP REAL ESTATE / ADMIN</span>
           <Link href="/properties" target="_blank">
-            View website ↗
+            View website <ArrowUpRightIcon className="admin-arrow-icon" />
           </Link>
         </div>
         <div className="admin-workspace-content">
