@@ -1,5 +1,6 @@
 import PropertyCard from "@/components/PropertyCard";
-import { PageNav } from "@/components/SectionPage";
+import ScrollRevealObserver from "@/components/ScrollRevealObserver";
+import { PageFooter, PageNav } from "@/components/SectionPage";
 import { getPublishedProperties } from "@/lib/properties";
 export const metadata = {
   title: "Browse Properties | J.S.P. Real Estate",
@@ -17,19 +18,21 @@ export default async function PropertiesPage({ searchParams }) {
   return (
     <>
       <PageNav />
+      <ScrollRevealObserver />
       <main>
         <section className="property-page-head">
-          <div className="shell">
+          <div className="shell" data-reveal>
             <span className="eyebrow">Property discovery</span>
             <h1>Find Your Next Property</h1>
             <p>
-              No signup or login required. Search, filter and contact JSP
+              Browse published opportunities across Edo, Delta and other cities
+              in Nigeria. No signup is required—search, filter and contact JSP
               directly.
             </p>
           </div>
         </section>
         <section className="shell property-browser">
-          <form className="property-filters">
+          <form className="property-filters" data-reveal>
             <input
               name="search"
               placeholder="Search property or location"
@@ -58,13 +61,13 @@ export default async function PropertiesPage({ searchParams }) {
             </button>
           </form>
           {properties.length ? (
-            <div className="public-property-grid">
+            <div className="public-property-grid" data-reveal>
               {properties.map((property) => (
                 <PropertyCard key={property._id} property={property} />
               ))}
             </div>
           ) : (
-            <div className="empty-state">
+            <div className="empty-state" data-reveal>
               <h2>No published properties match</h2>
               <p>
                 Try removing a filter or contact JSP for help finding a suitable
@@ -74,6 +77,7 @@ export default async function PropertiesPage({ searchParams }) {
           )}
         </section>
       </main>
+      <PageFooter />
     </>
   );
 }

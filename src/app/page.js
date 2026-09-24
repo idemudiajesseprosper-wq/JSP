@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import FeaturedPropertyCarousel from "@/components/FeaturedPropertyCarousel";
+import { ArrowUpRightIcon } from "@/components/ArrowIcons";
 
 const services = [
   ["01", "Renting", "Houses, apartments and flats selected around your needs."],
@@ -254,7 +255,7 @@ function Services() {
                 <p>{d}</p>
               </div>
               <span className="service-direction" aria-hidden="true">
-                ↗
+                <ArrowUpRightIcon />
               </span>
             </article>
           ))}
@@ -410,8 +411,8 @@ function Footer() {
         <div>
           <Logo light />
           <p>
-            Premium property discovery and professional management in Edo
-            State, Nigeria.
+            Premium property discovery and professional management across Edo,
+            Delta and other cities in Nigeria.
           </p>
         </div>
         <div>

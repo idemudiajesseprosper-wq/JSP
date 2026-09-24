@@ -12,7 +12,8 @@ export async function POST(request) {
       { status: 503 },
     );
   if (
-    String(email).toLowerCase() !== process.env.ADMIN_EMAIL.toLowerCase() ||
+    String(email).trim().toLowerCase() !==
+      process.env.ADMIN_EMAIL.trim().toLowerCase() ||
     !verifyPassword(String(password))
   )
     return NextResponse.json(
