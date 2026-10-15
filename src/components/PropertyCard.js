@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -6,17 +7,21 @@ import InquiryForm from "@/components/InquiryForm";
 
 function priceLabel(property) {
   if (!property.price) return "Price on request";
-  return `₦${Number(property.price).toLocaleString("en-NG")}${property.pricePeriod ? ` / ${property.pricePeriod}` : ""}`;
+  const amount = Number(property.price).toLocaleString("en-NG");
+  const period = property.pricePeriod ? ` / ${property.pricePeriod}` : "";
+  return `\u20A6${amount}${period}`;
 }
+
 export default function PropertyCard({ property }) {
   const [open, setOpen] = useState(false);
   const closeButtonRef = useRef(null);
+
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const close = (e) => {
-      if (e.key === "Escape") setOpen(false);
+    const close = (event) => {
+      if (event.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", close);
     return () => {
@@ -28,8 +33,12 @@ export default function PropertyCard({ property }) {
   useEffect(() => {
     if (open) closeButtonRef.current?.focus();
   }, [open]);
+
   const id = String(property._id);
-  const wa = `https://wa.me/2348161268386?text=${encodeURIComponent(`Hello JSP Real Estate, I am interested in ${property.title} (${id}) in ${property.location}. I would like to know more.`)}`;
+  const whatsapp = `https://wa.me/2348161268386?text=${encodeURIComponent(
+    `Hello JSP Real Estate, I am interested in ${property.title} (${id}) in ${property.location}. I would like to know more.`,
+  )}`;
+
   return (
     <>
       <article className="public-property-card">
@@ -49,29 +58,27 @@ export default function PropertyCard({ property }) {
             <span>
               {property.listingType === "rent" ? "For Rent" : "For Sale"}
             </span>
-            <i>View details →</i>
+            <i>View details &rarr;</i>
           </div>
           <section>
             <div className="card-price">
               <strong>{priceLabel(property)}</strong>
-              <small>
-                {property.pricePeriod ? `/ ${property.pricePeriod}` : ""}
-              </small>
             </div>
             <h2>{property.title}</h2>
-            <p>⌖ {property.location}</p>
+            <p>{property.location}</p>
             <ul>
               {property.bedrooms ? (
-                <li>⌂ {property.bedrooms} bedrooms</li>
+                <li>{property.bedrooms} bedrooms</li>
               ) : null}
               {property.bathrooms ? (
-                <li>♨ {property.bathrooms} bathrooms</li>
+                <li>{property.bathrooms} bathrooms</li>
               ) : null}
-              <li>◇ {property.propertyType}</li>
+              <li>{property.propertyType}</li>
             </ul>
           </section>
         </button>
       </article>
+
       {open ? (
         <div
           className="property-modal"
@@ -86,17 +93,18 @@ export default function PropertyCard({ property }) {
             aria-label="Close property details"
           />
           <aside className="property-drawer">
-            <header>
-              <span>Property Details</span>
+            <header className="property-drawer-header">
+              <span>JSP / Listing details</span>
               <button
                 type="button"
                 ref={closeButtonRef}
                 onClick={() => setOpen(false)}
                 aria-label="Close property details"
               >
-                ×
+                &times;
               </button>
             </header>
+
             <div className="drawer-property-media">
               <Image
                 src={property.images?.[0] || "/images/jsp-hero-property.jpeg"}
@@ -104,30 +112,72 @@ export default function PropertyCard({ property }) {
                 fill
                 sizes="(max-width:740px) 100vw, 52vw"
               />
+              <div className="drawer-media-overlay" />
+              <div className="drawer-media-meta">
+                <span>
+                  {property.listingType === "rent" ? "For rent" : "For sale"}
+                </span>
+                {property.images?.length > 1 ? (
+                  <small>{property.images.length} photos</small>
+                ) : null}
+              </div>
             </div>
+
             <div className="drawer-property-content">
-              <span className="eyebrow">
-                {property.listingType === "rent" ? "For rent" : "For sale"}
-              </span>
-              <h2>{property.title}</h2>
-              <strong>{priceLabel(property)}</strong>
-              <p className="drawer-location">⌖ {property.location}</p>
-              <div className="drawer-facts">
-                {property.bedrooms ? (
-                  <span>
-                    <b>{property.bedrooms}</b> Bedrooms
+              <div className="drawer-listing-intro">
+                <div>
+                  <span className="drawer-property-type">
+                    {property.propertyType}
                   </span>
+                  <h2>{property.title}</h2>
+                  <p className="drawer-location">{property.location}</p>
+                </div>
+                <strong>{priceLabel(property)}</strong>
+              </div>
+
+              <dl className="drawer-facts">
+                <div>
+                  <dt>Property type</dt>
+                  <dd>{property.propertyType}</dd>
+                </div>
+                {property.bedrooms ? (
+                  <div>
+                    <dt>Bedrooms</dt>
+                    <dd>{property.bedrooms}</dd>
+                  </div>
                 ) : null}
                 {property.bathrooms ? (
-                  <span>
-                    <b>{property.bathrooms}</b> Bathrooms
-                  </span>
+                  <div>
+                    <dt>Bathrooms</dt>
+                    <dd>{property.bathrooms}</dd>
+                  </div>
                 ) : null}
-                <span>
-                  <b>{property.propertyType}</b> Type
-                </span>
-              </div>
-              <p>{property.description}</p>
+                {property.area ? (
+                  <div>
+                    <dt>Area</dt>
+                    <dd>{property.area}</dd>
+                  </div>
+                ) : null}
+              </dl>
+
+              {property.description ? (
+                <section className="drawer-description">
+                  <h3>About this property</h3>
+                  <p>{property.description}</p>
+                </section>
+              ) : null}
+
+              {property.features?.length ? (
+                <section className="drawer-features">
+                  <h3>Key features</h3>
+                  <ul>
+                    {property.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
               {property.videos?.length ? (
                 <section
                   className="drawer-video-gallery"
@@ -146,14 +196,15 @@ export default function PropertyCard({ property }) {
                   ))}
                 </section>
               ) : null}
+
               <div className="drawer-ctas">
                 <a
                   className="button whatsapp"
-                  href={wa}
+                  href={whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Chat on WhatsApp
+                  Enquire on WhatsApp
                 </a>
                 <a className="outline dark-outline" href="tel:+2349064668429">
                   Call JSP
@@ -163,7 +214,7 @@ export default function PropertyCard({ property }) {
                 className="full-details-link"
                 href={`/properties/${property.slug}`}
               >
-                Open shareable property page →
+                View the full listing
               </Link>
               <InquiryForm property={{ id, title: property.title }} />
             </div>
