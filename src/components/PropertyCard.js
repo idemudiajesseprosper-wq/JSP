@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InquiryForm from "@/components/InquiryForm";
 
 function priceLabel(property) {
@@ -10,6 +10,7 @@ function priceLabel(property) {
 }
 export default function PropertyCard({ property }) {
   const [open, setOpen] = useState(false);
+  const closeButtonRef = useRef(null);
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -22,6 +23,10 @@ export default function PropertyCard({ property }) {
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", close);
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (open) closeButtonRef.current?.focus();
   }, [open]);
   const id = String(property._id);
   const wa = `https://wa.me/2348161268386?text=${encodeURIComponent(`Hello JSP Real Estate, I am interested in ${property.title} (${id}) in ${property.location}. I would like to know more.`)}`;
@@ -85,6 +90,7 @@ export default function PropertyCard({ property }) {
               <span>Property Details</span>
               <button
                 type="button"
+                ref={closeButtonRef}
                 onClick={() => setOpen(false)}
                 aria-label="Close property details"
               >
@@ -122,13 +128,23 @@ export default function PropertyCard({ property }) {
                 </span>
               </div>
               <p>{property.description}</p>
-              {property.videos?.[0] ? (
-                <video
-                  muted
-                  controls
-                  preload="metadata"
-                  src={property.videos[0]}
-                />
+              {property.videos?.length ? (
+                <section
+                  className="drawer-video-gallery"
+                  aria-label="Property videos"
+                >
+                  <h3>
+                    {property.videos.length === 1
+                      ? "Property video"
+                      : "Property videos"}
+                  </h3>
+                  {property.videos.map((video) => (
+                    <video controls preload="metadata" key={video}>
+                      <source src={video} />
+                      Your browser does not support property videos.
+                    </video>
+                  ))}
+                </section>
               ) : null}
               <div className="drawer-ctas">
                 <a

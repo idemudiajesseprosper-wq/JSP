@@ -1614,6 +1614,18 @@ footer {
   color: inherit;
   font: inherit;
   cursor: pointer;
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+.property-card-open:hover,
+.property-card-open:focus-visible {
+  box-shadow: 0 18px 40px rgba(38, 24, 24, 0.12);
+  transform: translateY(-3px);
+}
+.property-card-open:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: 3px;
 }
 .card-media {
   height: 245px;
@@ -1689,6 +1701,7 @@ footer {
   position: fixed;
   inset: 0;
   z-index: 100;
+  animation: property-backdrop-in 220ms ease-out both;
 }
 .modal-backdrop {
   position: absolute;
@@ -1710,6 +1723,14 @@ footer {
   overflow-y: auto;
   box-shadow: -25px 0 80px rgba(0, 0, 0, 0.22);
   animation: property-slide-in 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes property-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes property-slide-in {
   from {
@@ -1747,12 +1768,26 @@ footer {
 .drawer-property-media {
   height: 390px;
   position: relative;
+  animation: property-content-in 460ms 90ms cubic-bezier(0.22, 1, 0.36, 1)
+    both;
 }
 .drawer-property-media img {
   object-fit: cover;
 }
 .drawer-property-content {
   padding: 40px;
+  animation: property-content-in 460ms 150ms cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+@keyframes property-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .drawer-property-content > h2 {
   font-size: 38px;
@@ -1793,12 +1828,20 @@ footer {
   line-height: 1.8;
   color: var(--muted);
 }
-.drawer-property-content video {
+.drawer-video-gallery {
+  margin: 28px 0;
+}
+.drawer-video-gallery h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+.drawer-video-gallery video {
   display: block;
   width: 100%;
   max-height: 380px;
   background: #111;
-  margin: 25px 0;
+  margin: 12px 0 0;
 }
 .drawer-ctas {
   display: grid;
@@ -1841,6 +1884,18 @@ footer {
   }
   .property-drawer > header {
     padding: 0 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .property-modal,
+  .property-drawer,
+  .drawer-property-media,
+  .drawer-property-content {
+    animation: none;
+  }
+  .property-card-open,
+  .card-media img {
+    transition: none;
   }
 }
 
@@ -6268,6 +6323,98 @@ body {
   }
   .admin-workspace-top span {
     font-size: 8px;
+  }
+}
+
+/* Keep the staff workspace comfortable on phone-sized screens. */
+@media (max-width: 620px) {
+  .admin-sidebar {
+    padding: 8px 16px 12px;
+  }
+  .admin-sidebar-brand {
+    min-height: 48px;
+    padding: 0;
+  }
+  .admin-sidebar-brand > span {
+    font-size: 17px;
+  }
+  .admin-sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    overflow: visible;
+  }
+  .admin-sidebar nav a {
+    min-width: 0;
+    padding: 11px 10px;
+    font-size: 11px;
+  }
+  .admin-sidebar nav a span {
+    display: none;
+  }
+  .admin-sidebar-bottom {
+    gap: 8px;
+    padding: 11px 0 0;
+  }
+  .admin-workspace-top {
+    min-height: 44px;
+    padding: 0 19px;
+    font-size: 8px;
+  }
+  .admin-workspace-content {
+    padding-top: 32px;
+    padding-bottom: 54px;
+  }
+  .admin-workspace-heading {
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .admin-workspace-heading h1 {
+    font-size: clamp(2.35rem, 12vw, 3.4rem);
+  }
+  .admin-workspace-heading p {
+    font-size: 12px;
+  }
+  .admin-primary-link {
+    width: 100%;
+  }
+  .admin-list-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .admin-dashboard-panel,
+  .admin-form-section,
+  .admin-publish-panel {
+    padding: 20px;
+  }
+  .admin-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .admin-panel-heading h2,
+  .admin-quickstart h2 {
+    font-size: 21px;
+  }
+  .admin-recent-row {
+    align-items: flex-start;
+  }
+  .admin-recent-row .admin-pill {
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 360px) {
+  .admin-stat-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-stat-grid a:last-child {
+    grid-column: auto;
+  }
+  .admin-sidebar-bottom {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 @media (prefers-reduced-motion: reduce) {

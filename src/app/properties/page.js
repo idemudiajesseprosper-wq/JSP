@@ -5,6 +5,12 @@ import { getPublishedProperties } from "@/lib/properties";
 export const metadata = {
   title: "Browse Properties | J.S.P. Real Estate",
   description: "Browse published JSP properties available for rent and sale.",
+  alternates: { canonical: "/properties" },
+  openGraph: {
+    title: "Browse Properties | J.S.P. Real Estate",
+    description: "Browse published JSP properties available for rent and sale in Nigeria.",
+    url: "/properties",
+  },
 };
 export default async function PropertiesPage({ searchParams }) {
   const params = await searchParams;

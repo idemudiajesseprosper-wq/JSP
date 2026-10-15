@@ -8,6 +8,7 @@ const siteUrl =
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   title: "J.S.P. Real Estate & Property Ventures | Properties, Rentals & Land",
   description:
     "Discover property rentals, property sales, land and property management services from J.S.P. Real Estate & Property Ventures in Benin City, Nigeria.",
@@ -38,12 +39,41 @@ export const metadata = {
       "Browse properties, rentals, land and professional property management services in Benin City, Nigeria.",
     images: ["/images/jsp-hero-sunset-landscape.png"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={manrope.variable}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "RealEstateAgent",
+              name: "J.S.P. Real Estate & Property Ventures",
+              url: siteUrl,
+              logo: `${siteUrl}/images/jsp-logo-transparent.png`,
+              image: `${siteUrl}/images/jsp-hero-sunset-landscape.png`,
+              telephone: "+2349064668429",
+              email: "jsprealestateandpropertymanage@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Along Ogheghe Road, off Sapele Road Bypass",
+                addressLocality: "Benin City",
+                addressRegion: "Edo",
+                addressCountry: "NG",
+              },
+              areaServed: ["Benin City", "Edo", "Delta", "Nigeria"],
+              sameAs: ["https://wa.me/2348161268386"],
+            }),
+          }}
+        />
         {children}
         <BackToTop />
       </body>

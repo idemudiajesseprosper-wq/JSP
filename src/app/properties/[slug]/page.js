@@ -3,13 +3,31 @@ import { notFound } from "next/navigation";
 import InquiryForm from "@/components/InquiryForm";
 import { PageNav } from "@/components/SectionPage";
 import { getProperty, priceLabel } from "@/lib/properties";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jsp-rho.vercel.app";
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const property = await getProperty(slug);
   return property
     ? {
         title: `${property.title} | J.S.P. Real Estate`,
-        description: property.description,
+        description:
+          property.description ||
+          `${property.title} in ${property.location}. Contact JSP Real Estate for details.`,
+        alternates: { canonical: `/properties/${property.slug}` },
+        openGraph: {
+          title: `${property.title} | J.S.P. Real Estate`,
+          description:
+            property.description || `${property.title} in ${property.location}.`,
+          url: `/properties/${property.slug}`,
+          images: [
+            {
+              url: property.images?.[0] || "/images/jsp-hero-property.jpeg",
+              alt: property.title,
+            },
+          ],
+        },
       }
     : { title: "Property Not Found | JSP" };
 }
@@ -19,10 +37,39 @@ export default async function PropertyPage({ params }) {
   if (!property) notFound();
   const id = String(property._id);
   const whatsapp = `https://wa.me/2348161268386?text=${encodeURIComponent(`Hello JSP Real Estate, I am interested in ${property.title} (${id}) in ${property.location}. I would like to know more about the property.`)}`;
+  const propertySchema = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: property.title,
+    description: property.description,
+    url: `${siteUrl}/properties/${property.slug}`,
+    image: property.images || [],
+    datePosted: property.createdAt,
+    offers: property.price
+      ? {
+          "@type": "Offer",
+          price: property.price,
+          priceCurrency: "NGN",
+          availability: "https://schema.org/InStock",
+        }
+      : undefined,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: property.address,
+      addressLocality: property.location,
+      addressCountry: "NG",
+    },
+    numberOfRooms: property.bedrooms || undefined,
+    numberOfBathroomsTotal: property.bathrooms || undefined,
+  };
   return (
     <>
       <PageNav />
       <main className="property-detail">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(propertySchema) }}
+        />
         <section className="property-gallery">
           <Image
             src={property.images?.[0] || "/images/jsp-hero-property.jpeg"}
@@ -72,15 +119,14 @@ export default async function PropertyPage({ params }) {
               <div className="property-video-gallery">
                 <h2>Property videos</h2>
                 {property.videos.map((url) => (
-                  <a
+                  <video
+                    controls
+                    preload="metadata"
                     key={url}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="property-video-link"
+                    src={url}
                   >
                     Watch property video {property.videos.indexOf(url) + 1} ↗
-                  </a>
+                  </video>
                 ))}
               </div>
             ) : null}
