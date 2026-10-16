@@ -5,6 +5,7 @@ import { PageNav } from "@/components/SectionPage";
 import { getProperty, priceLabel } from "@/lib/properties";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jsp-rho.vercel.app";
+const serializeJsonLd = (data) => JSON.stringify(data).replace(/</g, "\\u003c");
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -68,7 +69,8 @@ export default async function PropertyPage({ params }) {
       <main className="property-detail">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(propertySchema) }}
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires script text and serializeJsonLd escapes tag delimiters.
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(propertySchema) }}
         />
         <section className="property-gallery">
           <Image
@@ -119,6 +121,7 @@ export default async function PropertyPage({ params }) {
               <div className="property-video-gallery">
                 <h2>Property videos</h2>
                 {property.videos.map((url) => (
+                  // biome-ignore lint/a11y/useMediaCaption: Captions are unavailable for admin-uploaded property walkthroughs.
                   <video
                     controls
                     preload="metadata"

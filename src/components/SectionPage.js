@@ -17,7 +17,7 @@ const pageContent = {
     title: "One partner, every property move.",
     intro:
       "From finding the right home to protecting the value of one you already own, JSP brings practical property services together with clear, attentive guidance.",
-    image: "/images/renting-service-house.jpeg",
+    image: "/images/renting-service-house-new.jpeg",
     imageAlt: "A residential home representing JSP property services",
     imageNote: "Rent · Buy · Sell · Manage",
     statement: "Property support shaped around real life.",

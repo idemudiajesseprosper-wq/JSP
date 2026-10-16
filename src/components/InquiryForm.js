@@ -24,11 +24,20 @@ export default function InquiryForm({ property }) {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error);
+      if (!response.ok)
+        throw new Error(result.error || "Unable to send your inquiry. Please try again.");
       event.currentTarget.reset();
-      setState({ loading: false, error: "", success: result.message });
+      setState({
+        loading: false,
+        error: "",
+        success: result.message || "Your inquiry has been sent to JSP.",
+      });
     } catch (error) {
-      setState({ loading: false, error: error.message, success: "" });
+      setState({
+        loading: false,
+        error: error.message || "Unable to send your inquiry. Please try again.",
+        success: "",
+      });
     }
   }
   return (

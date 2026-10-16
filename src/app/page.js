@@ -243,7 +243,7 @@ function Services() {
               {index === 0 && (
                 <Image
                   className="service-panel-image"
-                  src="/images/renting-service-house.jpeg"
+                  src="/images/renting-service-house-new.jpeg"
                   alt="Residential house available through JSP renting services"
                   fill
                   sizes="(max-width: 600px) 100vw, 42vw"

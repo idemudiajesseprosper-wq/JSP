@@ -14,7 +14,10 @@ export default function AdminInquiryActions({ inquiry }) {
     });
     if (response.ok) {
       setStatus(next);
-      setNotice({ type: "success", message: "Inquiry status updated." });
+      setNotice({
+        type: "success",
+        message: `Inquiry marked as ${next}.`,
+      });
     } else {
       const result = await response.json().catch(() => ({}));
       setNotice({

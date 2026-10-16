@@ -4,7 +4,8 @@ import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://jsp-rho.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.jsprealtyng.com/";
+const serializeJsonLd = (data) => JSON.stringify(data).replace(/</g, "\\u003c");
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -13,8 +14,8 @@ export const metadata = {
   description:
     "Discover property rentals, property sales, land and property management services from J.S.P. Real Estate & Property Ventures in Benin City, Nigeria.",
   icons: {
-    icon: [{ url: "/icon.png", type: "image/png" }],
-    apple: [{ url: "/icon.png", type: "image/png" }],
+    icon: [{ url: "/icon.png", sizes: "512x512", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
@@ -52,8 +53,9 @@ export default function RootLayout({ children }) {
       <body>
         <script
           type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires script text and serializeJsonLd escapes tag delimiters.
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonLd({
               "@context": "https://schema.org",
               "@type": "RealEstateAgent",
               name: "J.S.P. Real Estate & Property Ventures",

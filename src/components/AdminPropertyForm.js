@@ -43,7 +43,7 @@ export default function AdminPropertyForm({ property }) {
   );
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  const [notice, setNotice] = useState({ type: "", message: "" });
   function change(event) {
     const { name, value, type, checked } = event.target;
     setValues((current) => ({
@@ -55,7 +55,7 @@ export default function AdminPropertyForm({ property }) {
     const files = Array.from(event.target.files || []);
     if (!files.length) return;
     setUploading(true);
-    setError("");
+    setNotice({ type: "", message: "" });
     try {
       for (const file of files) {
         const data = new FormData();
@@ -71,9 +71,16 @@ export default function AdminPropertyForm({ property }) {
           ...current,
           [key]: [...current[key], result.url],
         }));
+        setNotice({
+          type: "success",
+          message: `${result.resourceType === "video" ? "Video" : "Photo"} uploaded successfully.`,
+        });
       }
     } catch (cause) {
-      setError(cause.message);
+      setNotice({
+        type: "error",
+        message: cause.message || "Unable to upload this file. Please try again.",
+      });
     } finally {
       setUploading(false);
       event.target.value = "";
@@ -88,7 +95,7 @@ export default function AdminPropertyForm({ property }) {
   async function save(event) {
     event.preventDefault();
     setSaving(true);
-    setError("");
+    setNotice({ type: "", message: "" });
     try {
       const response = await fetch(
         property
@@ -106,7 +113,10 @@ export default function AdminPropertyForm({ property }) {
       router.push("/admin/properties");
       router.refresh();
     } catch (cause) {
-      setError(cause.message);
+      setNotice({
+        type: "error",
+        message: cause.message || "Could not save property.",
+      });
       setSaving(false);
     }
   }
@@ -367,7 +377,11 @@ export default function AdminPropertyForm({ property }) {
             />
             <span>Mark as featured</span>
           </label>
-          <Toast message={error} type="error" onDismiss={() => setError("")} />
+          <Toast
+            message={notice.message}
+            type={notice.type || "error"}
+            onDismiss={() => setNotice({ type: "", message: "" })}
+          />
           <button type="submit" disabled={saving || uploading}>
             {saving
               ? "Saving…"

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import InquiryForm from "@/components/InquiryForm";
 
 function priceLabel(property) {
@@ -79,7 +80,8 @@ export default function PropertyCard({ property }) {
         </button>
       </article>
 
-      {open ? (
+      {open
+        ? createPortal(
         <div
           className="property-modal"
           role="dialog"
@@ -189,6 +191,7 @@ export default function PropertyCard({ property }) {
                       : "Property videos"}
                   </h3>
                   {property.videos.map((video) => (
+                    // biome-ignore lint/a11y/useMediaCaption: Captions are unavailable for admin-uploaded property walkthroughs.
                     <video controls preload="metadata" key={video}>
                       <source src={video} />
                       Your browser does not support property videos.
@@ -219,8 +222,10 @@ export default function PropertyCard({ property }) {
               <InquiryForm property={{ id, title: property.title }} />
             </div>
           </aside>
-        </div>
-      ) : null}
+        </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
