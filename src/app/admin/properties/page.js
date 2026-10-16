@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminShell from "@/components/AdminShell";
+import AdminPropertyStatus from "@/components/AdminPropertyStatus";
 import { ArrowUpRightIcon } from "@/components/ArrowIcons";
 import { isAdmin } from "@/lib/adminAuth";
 import { connectDB } from "@/lib/mongodb";
@@ -74,6 +75,11 @@ export default async function AdminPropertiesPage() {
                   <span className="admin-pill neutral">
                     {property.listingType === "rent" ? "For rent" : "For sale"}
                   </span>
+                  <span
+                    className={`admin-pill listing-${property.status || "available"}`}
+                  >
+                    {property.status || "available"}
+                  </span>
                 </div>
                 <h2>{property.title}</h2>
                 <p>
@@ -84,6 +90,10 @@ export default async function AdminPropertiesPage() {
                 </p>
               </div>
               <div className="admin-list-actions">
+                <AdminPropertyStatus
+                  id={String(property._id)}
+                  initialStatus={property.status || "available"}
+                />
                 <Link href={`/admin/properties/${property._id}/edit`}>
                   Edit property{" "}
                   <ArrowUpRightIcon className="admin-arrow-icon" />

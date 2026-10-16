@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import InquiryForm from "@/components/InquiryForm";
+import PropertyMediaGallery from "@/components/PropertyMediaGallery";
 import { PageNav } from "@/components/SectionPage";
 import { getProperty, priceLabel } from "@/lib/properties";
 
@@ -72,15 +72,7 @@ export default async function PropertyPage({ params }) {
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires script text and serializeJsonLd escapes tag delimiters.
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(propertySchema) }}
         />
-        <section className="property-gallery">
-          <Image
-            src={property.images?.[0] || "/images/jsp-hero-property.jpeg"}
-            alt={property.title}
-            fill
-            priority
-            sizes="100vw"
-          />
-        </section>
+        <PropertyMediaGallery property={property} />
         <section className="shell property-summary">
           <div>
             <span className="eyebrow">
@@ -117,22 +109,6 @@ export default async function PropertyPage({ params }) {
                 {id}
               </span>
             </div>
-            {property.videos?.length ? (
-              <div className="property-video-gallery">
-                <h2>Property videos</h2>
-                {property.videos.map((url) => (
-                  // biome-ignore lint/a11y/useMediaCaption: Captions are unavailable for admin-uploaded property walkthroughs.
-                  <video
-                    controls
-                    preload="metadata"
-                    key={url}
-                    src={url}
-                  >
-                    Watch property video {property.videos.indexOf(url) + 1} ↗
-                  </video>
-                ))}
-              </div>
-            ) : null}
             <h2>Features</h2>
             <ul>
               {property.features?.map((feature) => (

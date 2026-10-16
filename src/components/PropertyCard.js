@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import InquiryForm from "@/components/InquiryForm";
+import PropertyMediaGallery from "@/components/PropertyMediaGallery";
 
 function priceLabel(property) {
   if (!property.price) return "Price on request";
@@ -107,23 +108,7 @@ export default function PropertyCard({ property }) {
               </button>
             </header>
 
-            <div className="drawer-property-media">
-              <Image
-                src={property.images?.[0] || "/images/jsp-hero-property.jpeg"}
-                alt={property.title}
-                fill
-                sizes="(max-width:740px) 100vw, 52vw"
-              />
-              <div className="drawer-media-overlay" />
-              <div className="drawer-media-meta">
-                <span>
-                  {property.listingType === "rent" ? "For rent" : "For sale"}
-                </span>
-                {property.images?.length > 1 ? (
-                  <small>{property.images.length} photos</small>
-                ) : null}
-              </div>
-            </div>
+            <PropertyMediaGallery property={property} variant="drawer" />
 
             <div className="drawer-property-content">
               <div className="drawer-listing-intro">
@@ -180,25 +165,6 @@ export default function PropertyCard({ property }) {
                 </section>
               ) : null}
 
-              {property.videos?.length ? (
-                <section
-                  className="drawer-video-gallery"
-                  aria-label="Property videos"
-                >
-                  <h3>
-                    {property.videos.length === 1
-                      ? "Property video"
-                      : "Property videos"}
-                  </h3>
-                  {property.videos.map((video) => (
-                    // biome-ignore lint/a11y/useMediaCaption: Captions are unavailable for admin-uploaded property walkthroughs.
-                    <video controls preload="metadata" key={video}>
-                      <source src={video} />
-                      Your browser does not support property videos.
-                    </video>
-                  ))}
-                </section>
-              ) : null}
 
               <div className="drawer-ctas">
                 <a

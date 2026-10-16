@@ -5,6 +5,8 @@ import { validatePropertyInput } from "@/lib/adminProperties";
 import { connectDB } from "@/lib/mongodb";
 import Property from "@/models/Property";
 
+const listingStatuses = ["available", "sold", "rented"];
+
 export async function PATCH(request, { params }) {
   if (!(await isAdmin()))
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,6 +18,25 @@ export async function PATCH(request, { params }) {
     );
   try {
     const input = await request.json();
+    if (Object.keys(input).length === 1 && "status" in input) {
+      if (!listingStatuses.includes(input.status))
+        return NextResponse.json(
+          { error: "Choose a valid listing status." },
+          { status: 400 },
+        );
+      await connectDB();
+      const property = await Property.findByIdAndUpdate(
+        id,
+        { $set: { status: input.status } },
+        { new: true, runValidators: true },
+      );
+      if (!property)
+        return NextResponse.json(
+          { error: "Property not found." },
+          { status: 404 },
+        );
+      return NextResponse.json({ status: property.status });
+    }
     const result = validatePropertyInput(input);
     if (result.error) return NextResponse.json(result, { status: 400 });
     await connectDB();
