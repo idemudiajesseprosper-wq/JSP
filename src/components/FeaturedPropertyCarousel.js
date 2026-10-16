@@ -34,7 +34,10 @@ export default function FeaturedPropertyCarousel() {
     const section = sectionRef.current;
     if (!section) return;
     const items = section.querySelectorAll("[data-scroll-reveal]");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !window.IntersectionObserver
+    ) {
       items.forEach((item) => {
         item.classList.add("is-visible");
       });

@@ -1676,6 +1676,23 @@ footer {
   font-size: 9px;
   border-radius: 99px;
 }
+.card-media > .card-listing-status {
+  top: 14px;
+  right: 14px;
+  bottom: auto;
+  left: auto;
+  color: #fff;
+  text-transform: capitalize;
+}
+.card-listing-status.status-available,
+.drawer-listing-status.status-available,
+.property-live-status.status-available { background: #2f6b47; }
+.card-listing-status.status-sold,
+.drawer-listing-status.status-sold,
+.property-live-status.status-sold { background: #850d20; }
+.card-listing-status.status-rented,
+.drawer-listing-status.status-rented,
+.property-live-status.status-rented { background: #8a5b16; }
 .property-card-open > section {
   padding: 20px;
 }
@@ -8157,8 +8174,11 @@ body {
   }
   .editorial-page-heading h1 {
     margin: 22px 0;
-    font-size: clamp(4rem, 19vw, 6.2rem);
+    font-size: clamp(3.4rem, 15.5vw, 4.5rem);
     line-height: 0.88;
+    letter-spacing: -0.07em;
+    overflow-wrap: normal;
+    word-break: normal;
   }
   .editorial-page-heading > p {
     font-size: 0.84rem;
@@ -8199,6 +8219,19 @@ body {
     gap: 10px;
     min-height: 138px;
     padding: 25px 0;
+  }
+  .editorial-page-contact .editorial-contact-row {
+    grid-template-columns: 52px minmax(0, 1fr) 18px;
+    gap: 8px;
+  }
+  .editorial-page-contact .editorial-contact-row > span {
+    font-size: 0.54rem;
+    letter-spacing: 0.06em;
+  }
+  .editorial-page-contact .editorial-contact-row h2 {
+    font-size: clamp(1.3rem, 6.3vw, 1.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
   }
   .editorial-page-list article:hover,
   .editorial-contact-row:hover {
@@ -8680,6 +8713,23 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+.drawer-listing-status,
+.property-live-status {
+  display: inline-flex;
+  width: max-content;
+  margin: 0 0 10px;
+  padding: 5px 8px;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.property-summary .property-live-status {
+  margin-left: 9px;
+  vertical-align: middle;
+}
 .drawer-property-content .drawer-listing-intro h2 {
   max-width: 440px;
   margin: 0;
@@ -8874,4 +8924,60 @@ body {
   textarea {
     font-size: max(16px, 1rem);
   }
+}
+
+/* Refined property-detail experience */
+.property-detail { background: radial-gradient(circle at 88% 14%, rgba(158, 113, 79, 0.1), transparent 25rem), #fcfbf9; }
+.property-media-gallery-page { border-bottom: 1px solid #e6ded7; }
+.property-media-gallery-page .property-media-stage { height: min(61vw, 740px); }
+.property-media-thumbnails button { border-radius: 3px; transition: transform 180ms ease, border-color 180ms ease; }
+.property-media-thumbnails button:hover, .property-media-thumbnails button:focus-visible { border-color: #fff; outline: 2px solid #8b1226; outline-offset: 2px; transform: translateY(-2px); }
+.property-summary { position: relative; align-items: flex-start; max-width: 1180px; padding-top: clamp(42px, 6vw, 84px); padding-bottom: clamp(35px, 5vw, 64px); }
+.property-summary::before { position: absolute; top: 0; left: 0; width: 52px; height: 3px; content: ""; background: #8b1226; }
+.property-summary h1 { max-width: 800px; margin: 14px 0 10px; color: #211c1a; font-size: clamp(2.8rem, 5vw, 5.7rem); font-weight: 540; line-height: 0.94; letter-spacing: -0.07em; }
+.property-summary > strong { padding: 14px 17px; color: #fff; background: #211c1a; border-radius: 3px; font-size: clamp(1rem, 1.5vw, 1.3rem); }
+.property-body { grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr); gap: clamp(42px, 8vw, 118px); max-width: 1180px; }
+.property-body article > p { max-width: 710px; color: #625955; font-size: 0.96rem; }
+.property-facts { overflow: hidden; border-radius: 4px; }
+.property-facts span { background: #f2ece7; }
+.property-body aside { padding: 31px; color: #fff; background: #211c1a; border-radius: 4px; box-shadow: 0 18px 44px rgba(34, 27, 24, 0.14); }
+.property-body aside h2 { font-size: 1.75rem; line-height: 1.02; }
+.property-body aside p { color: rgba(255, 255, 255, 0.7); }
+.property-body aside .outline.dark-outline { color: #fff; border-color: rgba(255, 255, 255, 0.42); }
+.property-drawer { width: min(760px, 100%); background: #fcfaf8; box-shadow: -32px 0 90px rgba(25, 19, 17, 0.28); }
+.property-drawer-header { color: #655a54; background: rgba(252, 250, 248, 0.94); border-bottom-color: #e7dfd8; }
+.property-drawer-header > span { font-size: 0.62rem; letter-spacing: 0.16em; }
+.property-drawer-header button { border-radius: 50%; box-shadow: 0 3px 12px rgba(37, 28, 24, 0.07); }
+.property-media-gallery-drawer { background: #211c1a; }
+.property-media-gallery-drawer .property-media-stage { height: min(42vw, 430px); }
+.drawer-property-content { padding: 44px 54px 58px; }
+.drawer-listing-intro { gap: 30px; padding-bottom: 30px; }
+.drawer-property-content .drawer-listing-intro h2 { max-width: 510px; font-size: clamp(2.4rem, 4vw, 3.8rem); }
+.drawer-listing-intro > strong { padding: 11px 13px; color: #fff; background: #8b1226; border-radius: 3px; font-size: 0.95rem; }
+.drawer-facts > div { padding-top: 22px; padding-bottom: 22px; }
+.drawer-description, .drawer-features { margin-top: 38px; }
+.drawer-description h3, .drawer-features h3 { font-size: 0.69rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.drawer-description p { font-size: 0.9rem; line-height: 1.85; }
+.drawer-features li { padding: 9px 12px; background: #ede6df; }
+.drawer-ctas { gap: 12px; margin-top: 42px; }
+.drawer-ctas a { border-radius: 3px; }
+.full-details-link { font-size: 0.68rem; letter-spacing: 0.05em; }
+.drawer-property-content .inquiry-form { margin-top: 12px; padding: 28px; border-radius: 4px; }
+@media (max-width: 740px) {
+  .property-media-gallery-page .property-media-stage { height: 78vw; }
+  .property-summary { padding-top: 37px; padding-bottom: 38px; }
+  .property-summary h1 { font-size: clamp(2.45rem, 12.5vw, 4rem); }
+  .property-summary > strong { margin-top: 8px; padding: 11px 13px; }
+  .property-body { gap: 38px; padding-top: 42px; padding-bottom: 62px; }
+  .property-body aside { padding: 26px 22px; }
+  .property-facts { grid-template-columns: repeat(2, 1fr); }
+  .property-drawer-header { box-shadow: 0 3px 16px rgba(34, 27, 24, 0.06); }
+  .property-media-gallery-drawer .property-media-stage { height: 60vw; min-height: 245px; }
+  .drawer-property-content { padding: 32px 20px 42px; }
+  .drawer-listing-intro { gap: 18px; padding-bottom: 24px; }
+  .drawer-property-content .drawer-listing-intro h2 { font-size: clamp(2.25rem, 11.5vw, 3.3rem); }
+  .drawer-listing-intro > strong { font-size: 0.88rem; }
+  .drawer-description, .drawer-features { margin-top: 31px; }
+  .drawer-ctas { margin-top: 34px; }
+  .drawer-property-content .inquiry-form { padding: 20px; }
 }

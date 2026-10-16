@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/Toast";
+import { setAdminAuthNotice } from "@/components/AdminAuthNotice";
 
 function EyeIcon({ hidden }) {
   return hidden ? (
@@ -93,6 +94,10 @@ export default function AdminPasswordForm() {
         message: "Password changed. Sign in again with your new password.",
       });
       window.setTimeout(() => {
+        setAdminAuthNotice({
+          type: "success",
+          message: "Password changed. Please sign in with your new password.",
+        });
         router.replace("/admin/login");
         router.refresh();
       }, 1200);

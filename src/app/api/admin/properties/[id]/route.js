@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/adminAuth";
 import { validatePropertyInput } from "@/lib/adminProperties";
@@ -35,6 +36,8 @@ export async function PATCH(request, { params }) {
           { error: "Property not found." },
           { status: 404 },
         );
+      revalidatePath("/properties");
+      revalidatePath(`/properties/${property.slug}`);
       return NextResponse.json({ status: property.status });
     }
     const result = validatePropertyInput(input);
@@ -50,6 +53,8 @@ export async function PATCH(request, { params }) {
         { error: "Property not found." },
         { status: 404 },
       );
+    revalidatePath("/properties");
+    revalidatePath(`/properties/${property.slug}`);
     return NextResponse.json({ id: String(property._id), slug: property.slug });
   } catch (error) {
     return NextResponse.json(

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowUpRightIcon } from "@/components/ArrowIcons";
+import AdminAuthNotice, { setAdminAuthNotice } from "@/components/AdminAuthNotice";
 import Toast from "@/components/Toast";
 
 export default function AdminLoginForm() {
@@ -29,6 +30,10 @@ export default function AdminLoginForm() {
         setError(result.error || "Unable to sign in. Please try again.");
         return;
       }
+      setAdminAuthNotice({
+        type: "success",
+        message: "Welcome back. You are signed in to the dashboard.",
+      });
       router.push("/admin");
       router.refresh();
     } catch {
@@ -40,6 +45,7 @@ export default function AdminLoginForm() {
 
   return (
     <div className="admin-login-layout">
+      <AdminAuthNotice />
       <aside className="admin-login-visual">
         <Image
           src="/images/jsp-hero-sunset-landscape.png"

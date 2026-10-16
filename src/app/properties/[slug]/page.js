@@ -78,6 +78,11 @@ export default async function PropertyPage({ params }) {
             <span className="eyebrow">
               {property.listingType === "rent" ? "For rent" : "For sale"}
             </span>
+            <span
+              className={`property-live-status status-${property.status || "available"}`}
+            >
+              {property.status || "available"}
+            </span>
             <h1>{property.title}</h1>
             <p className="location">⌖ {property.location}</p>
           </div>

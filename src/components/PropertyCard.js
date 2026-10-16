@@ -60,6 +60,11 @@ export default function PropertyCard({ property }) {
             <span>
               {property.listingType === "rent" ? "For Rent" : "For Sale"}
             </span>
+            <span
+              className={`card-listing-status status-${property.status || "available"}`}
+            >
+              {property.status || "available"}
+            </span>
             <i>View details &rarr;</i>
           </div>
           <section>
@@ -115,6 +120,11 @@ export default function PropertyCard({ property }) {
                 <div>
                   <span className="drawer-property-type">
                     {property.propertyType}
+                  </span>
+                  <span
+                    className={`drawer-listing-status status-${property.status || "available"}`}
+                  >
+                    {property.status || "available"}
                   </span>
                   <h2>{property.title}</h2>
                   <p className="drawer-location">{property.location}</p>

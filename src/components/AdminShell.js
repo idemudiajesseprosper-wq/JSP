@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowUpRightIcon } from "@/components/ArrowIcons";
+import AdminAuthNotice, { setAdminAuthNotice } from "@/components/AdminAuthNotice";
 
 export default function AdminShell({
   title,
@@ -14,12 +15,25 @@ export default function AdminShell({
   const pathname = usePathname();
   const router = useRouter();
   async function signOut() {
-    await fetch("/api/admin/logout", { method: "POST" });
-    router.replace("/admin/login");
-    router.refresh();
+    try {
+      const response = await fetch("/api/admin/logout", { method: "POST" });
+      if (!response.ok) throw new Error("Could not sign out.");
+      setAdminAuthNotice({
+        type: "success",
+        message: "You have been signed out safely.",
+      });
+      router.replace("/admin/login");
+      router.refresh();
+    } catch {
+      setAdminAuthNotice({
+        type: "error",
+        message: "Unable to sign out. Please try again.",
+      });
+    }
   }
   return (
     <div className="admin-workspace">
+      <AdminAuthNotice />
       <aside className="admin-sidebar">
         <Link
           href="/admin"
